@@ -340,8 +340,9 @@
         headers: {
           'Content-Type': 'application/json',
           'apikey': SUPABASE_KEY,
-          'Authorization': `Bearer ${SUPABASE_KEY}`
-        },
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Prefer': 'return=minimal'
+          },
         body: JSON.stringify({ code, campaign, ad, contacted: false })
       });
     } catch (e) {
