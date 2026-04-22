@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RJ Royal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #F5C842;
+      --gold-light: #FFE27A;
+      --gold-dark: #C89A1A;
+      --purple: #3B1E6E;
+      --purple-dark: #1A0A38;
+      --green-wa: #25D366;
+      --green-wa-dark: #1aab55;
+      --text: #fff;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at top, #3B1E6E 0%, #1A0A38 50%, #0D0520 100%);
+      font-family: 'Lato', sans-serif;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+    }
+
+    /* Partículas de fondo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(245,200,66,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 10%, rgba(245,200,66,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 80%, rgba(245,200,66,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.2) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.15) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Logo */
+    .logo-wrap {
+      margin-bottom: 20px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+    .logo-wrap img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 30px rgba(245,200,66,0.4), 0 0 60px rgba(245,200,66,0.15);
+    }
+
+    /* Badge verificado */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,200,66,0.12);
+      border: 1px solid rgba(245,200,66,0.35);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--gold-light);
+      margin-bottom: 16px;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+    .badge::before { content: '✓'; font-size: 14px; }
+
+    /* Título */
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(28px, 8vw, 40px);
+      font-weight: 900;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(245,200,66,0.5), 0 2px 4px rgba(0,0,0,0.5);
+      line-height: 1.1;
+      margin-bottom: 8px;
+      animation: fadeUp 0.7s ease 0.25s both;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    /* Card central */
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(245,200,66,0.2);
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.7s ease 0.35s both;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .card p strong {
+      color: var(--gold-light);
+    }
+
+    /* Botón WhatsApp */
+    .btn-wrap {
+      animation: fadeUp 0.7s ease 0.4s both;
+      margin-bottom: 20px;
+    }
+
+    .btn-wa {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 18px 24px;
+      background: var(--green-wa);
+      color: #fff;
+      font-family: 'Lato', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.35);
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-wa::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(255,255,255,0.12), transparent);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .btn-wa:hover {
+      background: var(--green-wa-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(37,211,102,0.45);
+    }
+
+    .btn-wa:active {
+      transform: translateY(0);
+    }
+
+    .btn-wa svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    /* Pulso animado en el botón */
+    @keyframes pulse-ring {
+      0%   { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.06); opacity: 0; }
+    }
+    .btn-wrap {
+      position: relative;
+    }
+    .btn-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 17px;
+      border: 2px solid var(--green-wa);
+      animation: pulse-ring 1.8s ease-out infinite;
+      pointer-events: none;
+    }
+
+    /* Social proof */
+    .social-proof {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(37,211,102,0.08);
+      border: 1px solid rgba(37,211,102,0.2);
+      border-radius: 100px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 16px;
+      animation: fadeUp 0.7s ease 0.45s both;
+    }
+
+    .avatars {
+      display: flex;
+    }
+    .avatars span {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--purple-dark);
+      background: var(--gold-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      margin-left: -8px;
+      font-weight: 700;
+    }
+    .avatars span:first-child { margin-left: 0; background: #C89A1A; }
+    .avatars span:nth-child(2) { background: #9B6EBE; }
+    .avatars span:nth-child(3) { background: #E05A5A; }
+
+    /* Footer */
+    footer {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 8px;
+      animation: fadeUp 0.7s ease 0.5s both;
+    }
+
+    /* Banner inferior fijo */
+    .bottom-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--gold);
+      color: var(--purple-dark);
+      font-weight: 700;
+      font-size: 14px;
+      text-align: center;
+      padding: 12px 16px;
+      z-index: 100;
+      letter-spacing: 0.02em;
+      animation: slideUp 0.5s ease 0.8s both;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo-wrap">
+    <img src="logo.png" alt="RJ Royal">
+  </div>
+
+  <div class="badge">Plataforma Verificada</div>
+
+  <h1>RJ Royal</h1>
+  <p class="subtitle">Casino de Confianza</p>
+
+  <div class="card">
+    <p>Te estamos conectando con nuestro equipo<br>vía <strong>WhatsApp</strong>.</p>
+  </div>
+
+  <div class="btn-wrap">
+    <a id="wa-btn" class="btn-wa" href="#">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.86L.057 23.625a.75.75 0 0 0 .92.918l5.919-1.548A11.955 11.955 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.694 9.694 0 0 1-4.949-1.355l-.355-.21-3.668.96.976-3.57-.232-.368A9.694 9.694 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/>
+      </svg>
+      Ir a WhatsApp Ahora
+    </a>
+  </div>
+
+  <div class="social-proof">
+    <div class="avatars">
+      <span>A</span><span>M</span><span>L</span>
+    </div>
+    +10.000 clientes ganando todos los días
+  </div>
+
+  <footer>© 2025 RJ Royal. Todos los derechos reservados.</footer>
+</div>
+
+<div class="bottom-banner">
+  🎁 CREAMOS TU USUARIO — ¡Solicitalo ahora por WhatsApp!
+</div>
+
+<script>
+  // Configuración
+  const WHATSAPP_NUMBER = '5491178272186';
+  const SUPABASE_URL = 'https://wqiqurogioclchswjpox.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaXF1cm9naW9jbGNoc3dqcG94Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MjAyMjIsImV4cCI6MjA5MjM5NjIyMn0.tY9Ykjm6bsQrmENk4OLEtKwt6TjojiwnKjUz-yM0aog';
+
+  // Generar código único de 6 caracteres
+  function generateCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+  }
+
+  // Leer parámetros de la URL
+  function getParam(name) {
+    return new URLSearchParams(window.location.search).get(name) || '';
+  }
+
+  // Guardar lead en Supabase
+  async function saveLead(code, campaign, ad) {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`
+        },
+        body: JSON.stringify({ code, campaign, ad, contacted: false })
+      });
+    } catch (e) {
+      console.error('Error guardando lead:', e);
+    }
+  }
+
+  // Inicializar
+  const code = generateCode();
+  const campaign = getParam('utm_campaign');
+  const ad = getParam('utm_content');
+  const message = encodeURIComponent(`🎁 ${code} 🎁 Hola quiero cargar con mi bono extra`);
+
+  document.getElementById('wa-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+
+  saveLead(code, campaign, ad);
+</script>
+</body>
+</html>
