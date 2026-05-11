@@ -42,8 +42,13 @@ export default async function handler(req, res) {
             {
               event_name: 'Purchase',
               event_time: eventTime,
-              action_source: 'other',
+              action_source: 'website',
+              event_source_url: 'https://rjroyal-landing.vercel.app',
               event_id: code,
+              user_data: {
+                client_ip_address: req.headers['x-forwarded-for'] || '127.0.0.1',
+                client_user_agent: req.headers['user-agent'] || 'unknown'
+              },
               custom_data: {
                 currency: 'ARS',
                 value: 1
