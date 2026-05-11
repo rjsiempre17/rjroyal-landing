@@ -50,6 +50,7 @@ export default async function handler(req, res) {
               }
             }
           ],
+          test_event_code: 'TEST80506',
           access_token: 'EAAQYJyiJZCEEBRfUQyklqHTrintXkVUX5k0s4zCbvasuyJLCTIn3ylico0IW5zlbazboFUUMkZAoEBmQYhNJ30eOxxCcon6xZBtKZCH94vedSYmZAZBH4PhrmaWHKDjEOdrv993GY8RblZAonE6aXy6nQ3Xd7DdAa04eCUmhNl0e8qetGY8ZCLECYEpP4ams0aOSVAZDZD'
         })
       }
