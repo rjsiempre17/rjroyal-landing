@@ -57,7 +57,6 @@ export default async function handler(req, res) {
 
     const capiText = await capiRes.text();
 console.log('CAPI response:', capiText, 'status:', capiRes.status);
-console.log('CAPI response:', JSON.stringify(capiData));
 console.log('Supabase + CAPI OK, code:', code);
     return res.status(200).json({ ok: true, code });
 
