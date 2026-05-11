@@ -22,13 +22,13 @@ export default async function handler(req, res) {
 
     // Actualizar Supabase
     const supabaseRes = await fetch(
-      `https://wqiqurogioclchswjpox.supabase.co/rest/v1/leads?code=eq.${code}`,
+      `https://ghwdppswzzlrtacrszbq.supabase.co/rest/v1/leads?code=eq.${code}`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaXF1cm9naW9jbGNoc3dqcG94Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MjAyMjIsImV4cCI6MjA5MjM5NjIyMn0.tY9Ykjm6bsQrmENk4OLEtKwt6TjojiwnKjUz-yM0aog',
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndxaXF1cm9naW9jbGNoc3dqcG94Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MjAyMjIsImV4cCI6MjA5MjM5NjIyMn0.tY9Ykjm6bsQrmENk4OLEtKwt6TjojiwnKjUz-yM0aog',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdod2RwcHN3enpscnRhY3JzemJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0NDk1NjUsImV4cCI6MjA5NDAyNTU2NX0.UXK33HLozGKZwvqWcWkDkzd_hnwpUKPZe5lmhhmREDs',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdod2RwcHN3enpscnRhY3JzemJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0NDk1NjUsImV4cCI6MjA5NDAyNTU2NX0.UXK33HLozGKZwvqWcWkDkzd_hnwpUKPZe5lmhhmREDs',
           'Prefer': 'return=minimal'
         },
         body: JSON.stringify({ contacted: true })
