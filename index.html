@@ -68,8 +68,9 @@
     const ad = getParam('utm_content');
     const message = encodeURIComponent(`🎁 ${code} 🎁 Hola quiero cargar con mi bono extra`);
 
-    saveLead(code, campaign, ad);
-    window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+    saveLead(code, campaign, ad).finally(() => {
+  window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+});
   </script>
 </body>
 </html>
