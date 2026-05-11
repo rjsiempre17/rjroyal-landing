@@ -6,17 +6,17 @@ export default async function handler(req, res) {
   try {
     const body = req.body;
     const text = body['message[add][0][text]'] || '';
-    
-    // Extraer código de 6 caracteres alfanuméricos
+
     const match = text.match(/([A-Z0-9]{6})/);
-    
+
     if (!match) {
       return res.status(200).json({ ok: true, msg: 'Sin código' });
     }
 
     const code = match[1];
 
-    const supabaseRes = await fetch(
+    // Actualizar Supabase
+    await fetch(
       `https://ghwdppswzzlrtacrszbq.supabase.co/rest/v1/leads?code=eq.${code}`,
       {
         method: 'PATCH',
@@ -30,7 +30,32 @@ export default async function handler(req, res) {
       }
     );
 
-    console.log('Supabase status:', supabaseRes.status, 'code:', code);
+    // Enviar evento a Meta CAPI
+    const eventTime = Math.floor(Date.now() / 1000);
+    await fetch(
+      `https://graph.facebook.com/v19.0/963255786627033/events`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          data: [
+            {
+              event_name: 'Purchase',
+              event_time: eventTime,
+              action_source: 'other',
+              event_id: code,
+              custom_data: {
+                currency: 'ARS',
+                value: 1
+              }
+            }
+          ],
+          access_token: 'EAAQYJyiJZCEEBRfUQyklqHTrintXkVUX5k0s4zCbvasuyJLCTIn3ylico0IW5zlbazboFUUMkZAoEBmQYhNJ30eOxxCcon6xZBtKZCH94vedSYmZAZBH4PhrmaWHKDjEOdrv993GY8RblZAonE6aXy6nQ3Xd7DdAa04eCUmhNl0e8qetGY8ZCLECYEpP4ams0aOSVAZDZD'
+        })
+      }
+    );
+
+    console.log('Supabase + CAPI OK, code:', code);
     return res.status(200).json({ ok: true, code });
 
   } catch (e) {
