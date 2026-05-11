@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     const code = match[1];
 
     // Actualizar Supabase
-    await fetch(
+    const capiRes = await fetch(
       `https://ghwdppswzzlrtacrszbq.supabase.co/rest/v1/leads?code=eq.${code}`,
       {
         method: 'PATCH',
@@ -55,7 +55,9 @@ export default async function handler(req, res) {
       }
     );
 
-    console.log('Supabase + CAPI OK, code:', code);
+    const capiData = await capiRes.json();
+console.log('CAPI response:', JSON.stringify(capiData));
+console.log('Supabase + CAPI OK, code:', code);
     return res.status(200).json({ ok: true, code });
 
   } catch (e) {
