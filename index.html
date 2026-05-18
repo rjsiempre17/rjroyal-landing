@@ -46,7 +46,7 @@
       return new URLSearchParams(window.location.search).get(name) || '';
     }
 
-    async function saveLead(code, campaign, ad) {
+    async function saveLead(code, campaign, ad, fbclid) {
       try {
         await fetch('https://ghwdppswzzlrtacrszbq.supabase.co/rest/v1/leads', {
           method: 'POST',
@@ -56,7 +56,7 @@
             'Authorization': 'Bearer ' + SUPABASE_KEY,
             'Prefer': 'return=minimal'
           },
-          body: JSON.stringify({ code: code, campaign: campaign, ad: ad, contacted: false })
+          body: JSON.stringify({ code: code, campaign: campaign, ad: ad, fbclid: fbclid, contacted: false })
         });
       } catch (e) {
         console.error('Error guardando lead:', e);
@@ -64,11 +64,12 @@
     }
 
     const code = generateCode();
-    const campaign = getParam('utm_campaign');
-    const ad = getParam('utm_content');
-    const message = encodeURIComponent(`🎁 ${code} 🎁 Hola quiero cargar con mi bono extra`);
+const campaign = getParam('utm_campaign');
+const ad = getParam('utm_content');
+const fbclid = getParam('fbclid');
+const message = encodeURIComponent(`🎁 ${code} 🎁 Hola quiero cargar con mi bono extra`);
 
-    saveLead(code, campaign, ad).finally(() => {
+saveLead(code, campaign, ad, fbclid).finally(() => {
   window.location.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 });
   </script>
