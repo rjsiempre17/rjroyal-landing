@@ -15,8 +15,21 @@ export default async function handler(req, res) {
 
     const code = match[1];
 
+    // Buscar el lead en Supabase para obtener fbclid
+    const leadRes = await fetch(
+      `https://ghwdppswzzlrtacrszbq.supabase.co/rest/v1/leads?code=eq.${code}&select=fbclid`,
+      {
+        headers: {
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdod2RwcHN3enpscnRhY3JzemJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0NDk1NjUsImV4cCI6MjA5NDAyNTU2NX0.UXK33HLozGKZwvqWcWkDkzd_hnwpUKPZe5lmhhmREDs',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdod2RwcHN3enpscnRhY3JzemJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0NDk1NjUsImV4cCI6MjA5NDAyNTU2NX0.UXK33HLozGKZwvqWcWkDkzd_hnwpUKPZe5lmhhmREDs'
+        }
+      }
+    );
+    const leads = await leadRes.json();
+    const fbclid = leads?.[0]?.fbclid || null;
+
     // Actualizar Supabase
-    const capiRes = await fetch(
+    await fetch(
       `https://ghwdppswzzlrtacrszbq.supabase.co/rest/v1/leads?code=eq.${code}`,
       {
         method: 'PATCH',
@@ -32,7 +45,13 @@ export default async function handler(req, res) {
 
     // Enviar evento a Meta CAPI
     const eventTime = Math.floor(Date.now() / 1000);
-    await fetch(
+    const userData = {
+      client_ip_address: req.headers['x-forwarded-for'] || '127.0.0.1',
+      client_user_agent: req.headers['user-agent'] || 'unknown'
+    };
+    if (fbclid) userData.fbc = `fb.1.${eventTime}.${fbclid}`;
+
+    const capiRes = await fetch(
       `https://graph.facebook.com/v19.0/963255786627033/events`,
       {
         method: 'POST',
@@ -45,10 +64,7 @@ export default async function handler(req, res) {
               action_source: 'website',
               event_source_url: 'https://rjroyal-landing.vercel.app',
               event_id: code,
-              user_data: {
-                client_ip_address: req.headers['x-forwarded-for'] || '127.0.0.1',
-                client_user_agent: req.headers['user-agent'] || 'unknown'
-              },
+              user_data: userData,
               custom_data: {
                 currency: 'ARS',
                 value: 1
@@ -61,8 +77,8 @@ export default async function handler(req, res) {
     );
 
     const capiText = await capiRes.text();
-console.log('CAPI response:', capiText, 'status:', capiRes.status);
-console.log('Supabase + CAPI OK, code:', code);
+    console.log('CAPI response:', capiText, 'status:', capiRes.status, 'fbclid:', fbclid);
+    console.log('Supabase + CAPI OK, code:', code);
     return res.status(200).json({ ok: true, code });
 
   } catch (e) {
